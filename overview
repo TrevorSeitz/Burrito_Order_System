@@ -1,0 +1,37 @@
+App
+- Conbtrollers
+  - App Controller
+  - Burrito Controller
+  - Store Controller
+  - Order Controller
+  - User Controller
+- Models
+  - Burrito
+  - Store
+  - Order
+  - User
+- Views
+  - Burritos
+    - Edit
+    - Index
+    - New
+    - Show
+  - Stores
+    - Edit
+    - Index
+    - New
+    - Show
+  - Orders
+    - Edit
+    - Index
+    - New
+    - Show
+  - Users
+    - Edit
+    - Index
+    - New
+    - Show
+    - Login
+  - Errors
+Index
+Layout
