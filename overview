@@ -47,6 +47,7 @@ DB
     - Burrito id (Primary Key)
     - Name
     - description
+    - Name
     - price
     - vegan
     - hot
@@ -56,6 +57,8 @@ DB
     - store id (foriegn key)
     - store user id (foriegn key)
     - burritos ordered id (foriegn key)
+    - order number
+    - burritos ordered
     - burrito quantity
     - burrito price
     - order total
@@ -74,3 +77,13 @@ DB
     - password_digest
     - store id (foriegn key)
     - user order id history (foriegn key)
+    - store name
+    - store address
+    - store phone number
+    - store Users
+    - store orders
+  - create Users
+    - username
+    - email
+    - password
+    - store id
