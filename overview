@@ -7,9 +7,16 @@ App
   - User Controller
 - Models
   - Burrito
+      - belongs to an order
   - Store
+      - belongs to a User
+      - has many Orders
+      - has many Burritos through Orders
   - Order
+      - belongs to a Store
+      - has many Burritos
   - User
+      - has many Stores
 - Views
   - Burritos
     - Edit
@@ -35,3 +42,27 @@ App
   - Errors
 Index
 Layout
+DB
+  - create Burritos
+    - Name
+    - price
+    - vegan
+    - hot
+    - gluten free
+  - create orders
+    - order number
+    - burritos ordered
+    - burrito quantity
+    - burrito price
+    - order total
+  - create Stores
+    - store name
+    - store address
+    - store phone number
+    - store Users
+    - store orders
+  - create Users
+    - username
+    - email
+    - password
+    - store id
