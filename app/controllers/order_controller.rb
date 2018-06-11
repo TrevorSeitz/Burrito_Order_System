@@ -1,3 +1,3 @@
-class BurritoController < ApplicationController
+class OrderController < ApplicationController
 
 end
