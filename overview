@@ -44,18 +44,39 @@ Index
 Layout
 DB
   - create Burritos
+    - Burrito id (Primary Key)
+    - Name
+    - description
     - Name
     - price
     - vegan
     - hot
     - gluten free
   - create orders
+    - order number (Primary Key)
+    - store id (foriegn key)
+    - store user id (foriegn key)
+    - burritos ordered id (foriegn key)
     - order number
     - burritos ordered
     - burrito quantity
     - burrito price
     - order total
   - create Stores
+    - store ID (Primary Key)
+    - store name
+    - store address
+    - store phone number
+    - store Users (foriegn key)
+    - store order history (foriegn key)
+  - create Users
+    - user id (Primary Key)
+    - name
+    - username
+    - email
+    - password_digest
+    - store id (foriegn key)
+    - user order id history (foriegn key)
     - store name
     - store address
     - store phone number
