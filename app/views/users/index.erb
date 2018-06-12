@@ -1,8 +1,16 @@
 <h1>User Information</h1>
 
-<%binding.pry%>
 <% @user = User.find_by_id(session[:user_id])%>
-<h2>Welcome, <%= @user.name%></h2>
+<h2>Welcome, <%= @user.name%></h2><br><br>
+<%# NEW ORDER %>
+<form action="/orders/new" method="get">
+  <input type="submit" value="New Order">
+</form><br><br>
+<%# REVIEW ORDER HISTORY %>
+<form action="/orders/history" method="get">
+  <input type="submit" value="Order History">
+</form><br><br>
+<%# LOG OUT %>
 <form action="/logout" method="get">
   <input type="submit" value="Log Out">
-</form>
+</form><br><br>
