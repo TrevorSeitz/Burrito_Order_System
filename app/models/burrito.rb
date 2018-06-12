@@ -1,7 +1,7 @@
 class Burrito <ActiveRecord::Base
   belongs_to :order
 
-  validates_presence_of :name
+  validates_presence_of :name, :description, :price
 
   def slug
     self.name.downcase.gsub(" ", "-")
