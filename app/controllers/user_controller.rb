@@ -27,16 +27,27 @@ class UserController < ApplicationController
   end
 
   get "/login" do
+      binding.pry
         # user login page
     if is_logged_in?
       # if the user is already logged in - don't allow them to see the "login" page
       # instead, redirect to their store's index page
       redirect "/users/index"
     else
-
       redirect "/"
     end
   end
+
+    get "/users/admin" do
+      binding.pry
+      @user = User.find_by_id(session[:user_id])
+      
+      if @user.username == "sam_the_owner"
+        erb :"/users/admin"
+      else
+        redirect "/" 
+      end
+    end
 
   get "/logout" do
     session.clear
@@ -66,7 +77,11 @@ class UserController < ApplicationController
    
   post "/login" do
     @user = User.find_by(username: params[:username])
-    if @user && @user.authenticate(params[:password])
+    # binding.pry
+    if @user.username == "sam_the_owner" && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect "/users/admin"
+    elsif @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect "/users/index"
     else
