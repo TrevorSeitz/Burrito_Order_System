@@ -1,0 +1,14 @@
+<h1>Burrito List</h1>
+
+<% Burrito.all.each do |burrito|%>
+  <li>
+  <a href="/burritos/<%= burrito.slug%>"><%= burrito.name%></a><br>
+  </li>
+<%end%>
+
+<form action="/burritos/new" method="get">
+  <input type="submit" value="Add A new Burrito">
+</form>
+<form action="/burritos/delete" method="post">
+  <input type="submit" value="Delete checked Burrito(s)">
+</form>
