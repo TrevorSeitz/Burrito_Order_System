@@ -1,6 +1,6 @@
 <h1>New Burrito </h1>
 
-<form action="/burritos" method="POST">
+<form action="/burritos/new" method="POST">
   <label>Burrito Name:</label><input type="text" name="name"><br><br>
   <label>Description:</label><input type="text" name="description" size="50"><br><br>
   <label>Price: $</label><input type="number" name="price"><br><br><br>
@@ -8,5 +8,11 @@
   <input id="gluten_free" type="checkbox" name="gluten_free" value="Gluten_Free"><label for="gluten_free">Gluten Free  </label>
   <input id="hot" type="checkbox" name="hot" value="Hot"><label for="hot">HOT!</label><br><br><br>
 
-  <input type="submit" value="Create Burrito">
+  <input type="submit" value="Create Burrito"><br><br>
 </form>
+<form action="/burritos/index" method="get">
+  <input type="submit" value="List Burritos">
+</form>
+
+
+
