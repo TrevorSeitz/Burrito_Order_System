@@ -11,6 +11,10 @@ class StoreController < ApplicationController
     @user = User.find_by_id(session[:user_id])
     @store = Store.new(params)
     @store.save
+    @user.store_id = @store.id
+    @user.save 
+
+    erb :"/users/index"
   end
 
 end
