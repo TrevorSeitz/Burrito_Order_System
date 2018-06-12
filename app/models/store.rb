@@ -2,10 +2,10 @@ class Store <ActiveRecord::Base
   belongs_to :user
   has_many :orders
 
-  validates_presence_of :name
+  validates_presence_of :store_name
 
   def slug
-    self.name.downcase.gsub(" ", "-")
+    self.store_name.downcase.gsub(" ", "-")
   end
 
   def self.find_by_slug(slug)

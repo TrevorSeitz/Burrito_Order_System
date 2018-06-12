@@ -1,0 +1,8 @@
+<h1>User Information</h1>
+
+<%binding.pry%>
+<% @user = User.find_by_id(session[:user_id])%>
+<h2>Welcome, <%= @user.name%></h2>
+<form action="/logout" method="get">
+  <input type="submit" value="Log Out">
+</form>
