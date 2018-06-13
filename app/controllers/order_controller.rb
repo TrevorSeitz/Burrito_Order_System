@@ -22,7 +22,6 @@ class OrderController < ApplicationController
 
   post "/orders/preview" do
     params[:burritos].each do |id|
-      binding.pry
     end
   end
 # Create a single item - @item = Burrito.find_by_id(params[:burritos][id.to_i-1])
