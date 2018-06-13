@@ -1,16 +1,20 @@
 <h1>Order Preview</h1>
-
+<% @total = 0%>
 <% params[:burritos].each do |item| %>
   <% if item[:quantity].to_i > 0 %>
     <% burrito = Burrito.find_by_id(item[:id].to_i) %>
     <% burrito.quantity = item[:quantity].to_i %>
-    <%# binding.pry %>
+    
     <%= burrito.id %>, <%= burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= burrito.price %><br>
-    <% subtotal = burrito.quantity * burrito.price %>
-    Subtotal: $<%= subtotal %> <br>
+    <% item_total = burrito.quantity * burrito.price %>
+    Item Total: $<%= item_total %> <br><br>
+    <% @total += item_total %>
   <%end%>  
-<%end%><br><br><br>
+  <%#binding.pry%> 
+<%end%><br>
 
+Total: $<%= @total %><br><br><br><br>
+<%#binding.pry%> 
 <form action="/orders/complete" method="post">
   <input type="submit" value="Submit Order">
 </form>
