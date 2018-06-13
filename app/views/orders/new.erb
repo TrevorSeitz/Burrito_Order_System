@@ -9,14 +9,9 @@
     Quantity: <input type="number" name="burritos[][quantity]" id="quantity" min="0"><br><br><br>
   
 <%end%>
-<%# Params should be ["burritos" => {"id"=>"1", "quantity"=>"01"}, {"id"=>"2", "quantity"=>"02"}]%>
-  <%#binding.pry%> 
   <input type="submit" value="Submit">
 </form><br><br>
 <%# GO TO USER HOMEPAGE %>
 <form action="/users/index" method="get">
   <input type="submit" value="User Homepage">
 </form>
-
-
-<%# @song.genre_ids = params[:genres] %>
