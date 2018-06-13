@@ -24,8 +24,7 @@ class OrderController < ApplicationController
   end
 
   post "/orders/preview" do
-    params[:burritos].each do |id|
-    end
+    erb :"/orders/preview"
   end
 # Create a single item - @item = Burrito.find_by_id(params[:burritos][id.to_i-1])
 # Quantity of a burrito - params[:quantity][id.to_i-1]
