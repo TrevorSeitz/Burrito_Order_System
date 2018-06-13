@@ -1,5 +1,6 @@
 <h1>Order Preview</h1>
 <% @total = 0%>
+<%binding.pry%> 
 <% params[:burritos].each do |item| %>
   <% if item[:quantity].to_i > 0 %>
     <% burrito = Burrito.find_by_id(item[:id].to_i) %>
@@ -14,7 +15,12 @@
 <%end%><br>
 
 Total: $<%= @total %><br><br><br><br>
-<%#binding.pry%> 
+binding.pry 
+
+<form action="/orders/edit" method="post">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+  <input type="submit" value="Edit Order"><br><br>
+ 
 <form action="/orders/complete" method="post">
   <input type="submit" value="Submit Order">
 </form>
