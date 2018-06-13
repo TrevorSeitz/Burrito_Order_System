@@ -2,7 +2,7 @@ class Order <ActiveRecord::Base
   belongs_to :store
   has_many :burritos
 
-  validates_presence_of :store, :burritos
+  validates_presence_of :store_id, :user_id
 
   def slug
     self.name.downcase.gsub(" ", "-")
