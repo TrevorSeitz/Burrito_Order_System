@@ -1,14 +1,17 @@
 class OrderController < ApplicationController
   before do
+    # Check if User exists
+    if !!@user = User.find_by(email: params[:email])
+      redirect "/users/new"
+    end
+    # Check if User is Logged in
     if !is_logged_in?
       # if the user is not logged in - go to login page
       redirect "/login"
     end
-    if !!@user = User.find_by(email: params[:email])
-      redirect "/login"
-    end
+    # Create @user
     @user = User.find_by_id(session[:user_id])
-    binding.pry
+    # Create @store
     @store = Store.find_by_id(@user.store_id)
   end
 
