@@ -1,1 +1,7 @@
 <h1>ORDER HISTORY</h1>
+<% Order.all.each do |order|%>
+<% if order.user_id == session[:user_id]%>
+  <p>Order #: <%= order.id %> Store:  <%= @store.store_name %></p> 
+  <%end%>
+<%# binding. pry %>
+<%end%>
