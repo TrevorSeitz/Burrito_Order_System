@@ -1,14 +1,22 @@
 <h1>NEW ORDER</h1>
-
 <form action="/orders/preview" method="POST">
 <% Burrito.all.each do |burrito| %>
-  <input id="<%= burrito.name %>" type="checkbox" name="burritos[]" value="<%= burrito.id %>">
- <label for="burritos[]"><%= burrito.name %><br> 
+  <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
+ <label for="burritos[][id]"><%= burrito.id %>, <%= burrito.name %><br> 
     <%= burrito.description %><br>
     $<%= burrito.price %><br><br>
-    Quantity: <input type="number" name="quantity[]" id"quantity" min="0"><br><br><br>
   </label> 
+    Quantity: <input type="number" name="burritos[][quantity]" id="quantity" min="0"><br><br><br>
+  
 <%end%>
-
+<%# Params should be ["burritos" => {"id"=>"1", "quantity"=>"01"}, {"id"=>"2", "quantity"=>"02"}]%>
+  <%#binding.pry%> 
   <input type="submit" value="Submit">
+</form><br><br>
+<%# GO TO USER HOMEPAGE %>
+<form action="/users/index" method="get">
+  <input type="submit" value="User Homepage">
 </form>
+
+
+<%# @song.genre_ids = params[:genres] %>
