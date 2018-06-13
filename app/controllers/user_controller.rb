@@ -19,7 +19,12 @@ class UserController < ApplicationController
   end
 
   get "/users/index" do
-    erb :"/users/index"
+    @user = User.find_by_id(session[:user_id])
+    if @user.store_id == nil
+      redirect "/stores/new"
+    else
+      erb :"/users/index"
+    end
   end
 
   get "/errors/users/new" do
@@ -27,7 +32,6 @@ class UserController < ApplicationController
   end
 
   get "/login" do
-      binding.pry
         # user login page
     if is_logged_in?
       # if the user is already logged in - don't allow them to see the "login" page
@@ -38,15 +42,14 @@ class UserController < ApplicationController
     end
   end
 
-    get "/users/admin" do
-      @user = User.find_by_id(session[:user_id])
-      
-      if @user.username == "sam_the_owner"
-        erb :"/users/admin"
-      else
-        redirect "/" 
-      end
+  get "/users/admin" do
+    @user = User.find_by_id(session[:user_id])
+    if @user.username == "sam_the_owner"
+      erb :"/users/admin"
+    else
+      redirect "/" 
     end
+  end
 
   get "/logout" do
     session.clear
@@ -69,22 +72,23 @@ class UserController < ApplicationController
       redirect "/login"
     end
     @user = User.new(params)
+      binding.pry
     @user.save
+      binding.pry
     session[:user_id] = @user.id
     erb :"/stores/new"
   end
    
   post "/login" do
     @user = User.find_by(username: params[:username])
-    # binding.pry
-    if @user.username == "sam_the_owner" && @user.authenticate(params[:password])
+    if @user == nil
+      erb :"/errors/users/login"
+    elsif @user.username == "sam_the_owner" && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect "/users/admin"
     elsif @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect "/users/index"
-    else
-      redirect "/errors/users/login"
     end
   end
 end
