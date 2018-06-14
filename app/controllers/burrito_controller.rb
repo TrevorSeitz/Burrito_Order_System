@@ -2,6 +2,7 @@ class BurritoController < ApplicationController
   before do
     # Check if User exists
     if !!@user = User.find_by(email: params[:email])
+      binding.pry
       redirect "/users/new"
     end
     # Check if User is Logged in

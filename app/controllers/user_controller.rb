@@ -19,6 +19,7 @@ class UserController < ApplicationController
   end
 
   get "/users/index" do
+    binding.pry
     @user = User.find_by_id(session[:user_id])
     if @user.store_id == nil
       redirect "/stores/new"
@@ -44,6 +45,7 @@ class UserController < ApplicationController
 
   get "/users/admin" do
     @user = User.find_by_id(session[:user_id])
+    binding.pry
     if @user.username == "sam_the_owner"
       erb :"/users/admin"
     else
@@ -62,6 +64,7 @@ class UserController < ApplicationController
   end
 
   post "/users/new" do
+    binding.pry
     if !params.values.all?{|param| !param.empty?}
       redirect "/errors/users/new"
     end
@@ -72,9 +75,7 @@ class UserController < ApplicationController
       redirect "/login"
     end
     @user = User.new(params)
-      binding.pry
     @user.save
-      binding.pry
     session[:user_id] = @user.id
     erb :"/stores/new"
   end

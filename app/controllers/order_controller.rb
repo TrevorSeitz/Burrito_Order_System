@@ -41,6 +41,7 @@ class OrderController < ApplicationController
 # Item 
 
   post "/orders/complete" do
+    binding.pry
   end
 
   patch "/orders/edit" do
