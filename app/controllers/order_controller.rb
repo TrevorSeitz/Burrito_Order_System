@@ -29,23 +29,21 @@ class OrderController < ApplicationController
   end
 
   post "/orders/preview" do
-    
-    if !params[:burritos].all?{|param| !param[:quantity].empty?}
-       redirect '/orders/new'
+    params[:burritos].each do |item|
+      if item[:quantity].to_i > 0
+        erb :"/orders/preview"
+      end
     end
-    erb :"/orders/preview"
+    erb :'/errors/orders/blank_order'
   end
 # Create a single item - @item = Burrito.find_by_id(params[:burritos][id.to_i-1])
 # Quantity of a burrito - params[:quantity][id.to_i-1]
 # Item 
 
   post "/orders/complete" do
-  binding.pry
   end
 
   patch "/orders/edit" do
     @order = Order.find_by_id(@user.order_ids)
-    binding.pry
-
   end
 end
