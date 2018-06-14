@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612182950) do
+ActiveRecord::Schema.define(version: 20180614145853) do
 
   create_table "burritos", force: :cascade do |t|
     t.string  "name"
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(version: 20180612182950) do
     t.boolean "gluten_free"
     t.boolean "hot"
     t.decimal "quantity"
+  end
+
+  create_table "order_burrito", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "user_id"
+    t.integer "burrito_id"
+    t.integer "quantity"
+    t.integer "item_price"
   end
 
   create_table "orders", force: :cascade do |t|
