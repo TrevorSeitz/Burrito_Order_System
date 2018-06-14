@@ -19,7 +19,6 @@ class UserController < ApplicationController
   end
 
   get "/users/index" do
-    binding.pry
     @user = User.find_by_id(session[:user_id])
     if @user.store_id == nil
       redirect "/stores/new"
@@ -45,7 +44,6 @@ class UserController < ApplicationController
 
   get "/users/admin" do
     @user = User.find_by_id(session[:user_id])
-    binding.pry
     if @user.username == "sam_the_owner"
       erb :"/users/admin"
     else

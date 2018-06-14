@@ -24,6 +24,15 @@ class OrderController < ApplicationController
     erb :"/orders/new"
   end
   
+  get "/orders/preview" do
+    # save order to orders table and to orders_burritos
+    @order = Order.create(store_id: @store.id, user_id: @user.id)
+    binding.pry
+    # possibly create /orders/create control to create order and and save to tables
+    # before allowing editing
+    erb :"/orders/preview"
+  end
+
   get '/orders/history' do
     erb :"orders/history"
   end
@@ -31,10 +40,10 @@ class OrderController < ApplicationController
   post "/orders/preview" do
     params[:burritos].each do |item|
       if item[:quantity].to_i > 0
-        erb :"/orders/preview"
+        redirect "/orders/preview"
       end
+      erb :'/errors/orders/blank_order'
     end
-    erb :'/errors/orders/blank_order'
   end
 # Create a single item - @item = Burrito.find_by_id(params[:burritos][id.to_i-1])
 # Quantity of a burrito - params[:quantity][id.to_i-1]
@@ -42,9 +51,11 @@ class OrderController < ApplicationController
 
   post "/orders/complete" do
     binding.pry
+    # do all the things needed to save
   end
 
   patch "/orders/edit" do
-    @order = Order.find_by_id(@user.order_ids)
+    binding.pry
+    # do all the things needed to save/edit 
   end
 end

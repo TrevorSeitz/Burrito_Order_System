@@ -14,3 +14,9 @@
 <form action="/logout" method="get">
   <input type="submit" value="Log Out">
 </form><br><br>
+<%# LOG OUT %>
+<% if @user.name = "sam_the_owner"%>
+<form action="/users/admin" method="get">
+  <input type="submit" value="Admin Page">
+</form><br><br>
+<%end%>

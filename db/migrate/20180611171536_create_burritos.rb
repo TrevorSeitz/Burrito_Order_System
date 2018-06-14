@@ -4,6 +4,7 @@ class CreateBurritos < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.decimal :price
+      t.integer :quantity
       t.boolean :vegan
       t.boolean :gluten_free
       t.boolean :hot

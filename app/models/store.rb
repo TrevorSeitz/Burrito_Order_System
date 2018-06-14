@@ -1,6 +1,7 @@
 class Store <ActiveRecord::Base
-  belongs_to :user
-  has_many :orders
+  has_many :user #or belongs_to?
+  has_many :orders, through: :order_burrito
+  has_many :burritos, through: :order_burrito
 
   validates_presence_of :store_name
 
