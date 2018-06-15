@@ -36,6 +36,13 @@ class OrderController < ApplicationController
     erb :"orders/history"
   end
 
+  get '/orders/:id' do
+    # binding.pry
+    @order = Order.find(params[:id])
+
+    erb :'/orders/show'
+  end
+
   post "/orders/preview" do
     # save order to orders table and to order_burrito
     @order = Order.create(store_id: @store.id, user_id: @user.id)
