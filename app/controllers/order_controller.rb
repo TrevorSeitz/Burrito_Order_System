@@ -28,6 +28,10 @@ class OrderController < ApplicationController
     erb :"/orders/preview"
   end
 
+  get "/orders/edit" do
+    erb :"/orders/edit"
+  end
+
   get '/orders/history' do
     erb :"orders/history"
   end
@@ -35,33 +39,39 @@ class OrderController < ApplicationController
   post "/orders/preview" do
     # save order to orders table and to order_burrito
     @order = Order.create(store_id: @store.id, user_id: @user.id)
+    @user.order_ids = @order.id
     params[:burritos].each do |item|
       if item[:quantity].to_i > 0
         # bring in current burrito element
         @burrito = Burrito.find_by_id(item[:id].to_i)
-        # create new order
+        # create new order_burrito row
         OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
-        # redirect "/orders/preview"
-      # binding.pry
       end
     end
-    # binding.pry
     if OrderBurrito.last.order_id == @order.id
       redirect "/orders/preview"
     end
     erb :'/errors/orders/blank_order'
   end
-# Create a single item - @item = Burrito.find_by_id(params[:burritos][id.to_i-1])
-# Quantity of a burrito - params[:quantity][id.to_i-1]
-# Item 
-
-  post "/orders/complete" do
-    binding.pry
-    # do all the things needed to save
-  end
 
   patch "/orders/edit" do
     binding.pry
-    # do all the things needed to save/edit 
+    params[:burritos].each do |item|
+      if item[:quantity].to_i > 0
+        # bring in current burrito element
+        @burrito = Burrito.find_by_id(item[:id].to_i)
+        # create new order_burrito row
+        OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
+      end
+    end
+    if OrderBurrito.last.order_id == @order.id
+      redirect "/orders/preview"
+    end
+    erb :'/errors/orders/blank_order'
   end
+
+  post "/orders/complete" do
+    redirect "/users/index"
+  end
+  
 end
