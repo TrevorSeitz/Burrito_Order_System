@@ -1,6 +1,10 @@
 <h1>Order Preview</h1>
 <% @total = 0%>
-<%#binding.pry%> 
+<% @burritos = []%>
+User.where(weekly_subscriber: true).find_each do |user|
+<% OrderBurrito.where(order_id == @order.id).find_each do |order|%>
+<%binding.pry%> 
+
 <% params[:burritos].each do |item| %>
   <% if item[:quantity].to_i > 0 %>
     <% burrito = Burrito.find_by_id(item[:id].to_i) %>
