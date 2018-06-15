@@ -23,7 +23,6 @@ class StoreController < ApplicationController
     end
     @user = User.find_by_id(session[:user_id])
     @store = Store.new(params)
-    @store.users_ids = @user.id
     @store.save
     @user.store_id = @store.id
     @user.save 

@@ -2,12 +2,12 @@
 <form action="/orders/preview" method="POST">
 <% Burrito.all.each do |burrito| %>
   <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
- <label for="burritos[][id]"><%= burrito.id %>, <%= burrito.name %><br> 
+ <label for="burritos[][id]"><%= burrito.id %>: <%= burrito.name %><br> 
     <%= burrito.description %><br>
     $<%= burrito.price %><br><br>
   </label> 
     Quantity: <input type="number" name="burritos[][quantity]" id="quantity" min="0"><br><br><br>
-  
+  <%# OrderBurrito.create(order_id: @order.id %>
 <%end%>
   <input type="submit" value="Submit">
 </form><br><br>

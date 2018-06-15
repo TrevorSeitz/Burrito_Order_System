@@ -4,11 +4,11 @@ class UserController < ApplicationController
   get "/users" do
     @users = User.all
     redirect "/users/index"
-    # erb :"/users/index"
   end
 
   get "/users/new" do
-    # sign up a new user
+    # # sign up a new user
+    # binding.pry
     if is_logged_in?
       # if the user is already logged in - don't allow them to see the "new user" page
       # instead, redirect to their store's index page
@@ -32,6 +32,7 @@ class UserController < ApplicationController
   end
 
   get "/login" do
+    binding.pry
         # user login page
     if is_logged_in?
       # if the user is already logged in - don't allow them to see the "login" page
@@ -62,7 +63,6 @@ class UserController < ApplicationController
   end
 
   post "/users/new" do
-    binding.pry
     if !params.values.all?{|param| !param.empty?}
       redirect "/errors/users/new"
     end
