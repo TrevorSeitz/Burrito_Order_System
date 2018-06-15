@@ -11,8 +11,10 @@
     <%end%>
 <%end%><br>
 Total: $<%= @total %><br><br><br><br>
- <% @order.order_total = @total %>
- <% @order.save %>
+<% @order.order_total = @total %>
+<% @order.save %>
+<%# @order_burrito.order_total = @total %>
+<%# @order_burrito.save %>
 <form action="/orders/edit" method="get">
   <input type="submit" value="Edit Order"><br><br>
 </form><br>
