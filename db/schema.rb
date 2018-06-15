@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20180614145853) do
     t.boolean "hot"
   end
 
-  create_table "order_burrito", force: :cascade do |t|
+  create_table "order_burritos", force: :cascade do |t|
     t.integer "order_id"
     t.integer "user_id"
     t.integer "burrito_id"

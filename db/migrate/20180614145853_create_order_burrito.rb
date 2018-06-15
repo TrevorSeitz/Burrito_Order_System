@@ -1,6 +1,6 @@
 class CreateOrderBurrito < ActiveRecord::Migration
   def change
-    create_table :order_burrito do |t|
+    create_table :order_burritos do |t|
       t.integer :order_id
       t.integer :user_id
       t.integer :burrito_id
