@@ -25,8 +25,6 @@ class OrderController < ApplicationController
   end
   
   get "/orders/preview" do
-    # possibly create /orders/create control to create order and and save to tables
-    # before allowing editing
     erb :"/orders/preview"
   end
 
