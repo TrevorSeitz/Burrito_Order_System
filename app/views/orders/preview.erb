@@ -6,7 +6,7 @@
     <% burrito = Burrito.find_by_id(item[:id].to_i) %>
     <% burrito.quantity = item[:quantity].to_i %>
     
-    <%= burrito.id %>, <%= burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= burrito.price %><br>
+    <%= burrito.id %>: <%= burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= burrito.price %><br>
     <% item_total = burrito.quantity * burrito.price %>
     Item Total: $<%= item_total %> <br><br>
     <% @total += item_total %>
