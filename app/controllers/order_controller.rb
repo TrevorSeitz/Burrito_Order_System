@@ -44,35 +44,47 @@ class OrderController < ApplicationController
   post "/orders/preview" do
     @order = Order.find_by_id(@user.order_ids)
     # save order to orders table   
-    # @user.order_ids = @order.id
+    @item_count = 0
     params[:burritos].each do |item|
       if item[:quantity].to_i > 0
+        @item_count += 1
         # bring in current burrito element
         @burrito = Burrito.find_by_id(item[:id].to_i)
         # save each ordered burrito to order_burrito
         OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
       end
     end
-    if OrderBurrito.last.order_id == @order.id
-      redirect "/orders/preview"
+    if @item_count < 1
+      erb :'/errors/orders/blank_order'
     end
-    erb :'/errors/orders/blank_order'
+    redirect "/orders/preview"
   end
 
   patch "/orders/edit" do
-    binding.pry
-    params[:burritos].each do |item|
-      if item[:quantity].to_i > 0
-        # bring in current burrito element
-        @burrito = Burrito.find_by_id(item[:id].to_i)
-        # create new order_burrito row
-         OrderBurrito.update(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
+    item_count = 0
+    @order = Order.find_by_id(@user.order_ids)
+    # gather all items from order_burrito for this order
+    @order_items = OrderBurrito.all.where(order_id:  @order.id)
+    #  sort through the edited order 
+    params[:burritos].each do |burrito|
+      @burrito = Burrito.find_by_id(burrito[:id].to_i)
+      if burrito[:quantity].to_i >0
+        item_count += 1
+      end
+      @current_item = @order_items.where(burrito_id: burrito[:id].to_i)
+      if @current_item == [] 
+        if burrito[:quantity].to_i >0
+          OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: burrito[:quantity].to_i, item_price: @burrito.price)
+        end
+      elsif @current_item[0].quantity != burrito[:quantity].to_i
+        @current_item[0].quantity = burrito[:quantity].to_i
+        @current_item[0].save
       end
     end
-    if OrderBurrito.last.order_id == @order.id
-      redirect "/orders/preview"
+    if item_count < 1
+      erb :'/errors/orders/blank_order'
     end
-    erb :'/errors/orders/blank_order'
+    redirect "/orders/preview"
   end
 
   post "/orders/complete" do

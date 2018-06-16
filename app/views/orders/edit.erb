@@ -1,5 +1,6 @@
 <h1>EDIT ORDER</h1>
-<form action="/orders/preview" method="POST">
+<form action="/orders/edit" method="POST">
+<input id="hidden" type="hidden" name="_method" value="PATCH">
 <% Burrito.all.each do |burrito| %>
   <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
  <label for="burritos[][id]"><%= burrito.id %>: <%= burrito.name %><br> 
@@ -16,6 +17,9 @@
   
 <%end%>
 
-<form action="/orders/complete" method="post">
-  <input type="submit" value="Submit Order">
+<input type="submit" value="Submit Order">
+</form>
+<%# GO TO USER HOMEPAGE %>
+<form action="/users/index" method="get">
+  <input type="submit" value="User Homepage">
 </form>
