@@ -1,4 +1,19 @@
-  <%#binding.pry%>
-  Order Information 
-  <p>Order #: <%= params[:id] %></a> Store:  <%= @store.store_name %> <%= @order.order_total %><br>
-  Ordered by: <%= @user.name %></p> 
+Order Information 
+<p>Order #: <%= params[:id] %></a> Store: <%= @store.store_name %><br> 
+Order Total: $<%= @order.order_total %><br>
+Ordered by: <%= @user.name %></p> 
+
+<% @order_items = OrderBurrito.all.where(order_id:  params[:id].to_i)%>
+<%@order_items.each do |burrito| %>
+  <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
+  #<%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
+  Item Total: $<%= burrito.quantity * @burrito.price %><br><br>
+<% end %>
+<%# BACK TO ORDER HISTORY %>
+<form action="/orders/history" method="get">
+  <input type="submit" value="Back to Order History">
+</form><br>
+<%# GO TO USER HOMEPAGE %>
+<form action="/users/index" method="get">
+  <input type="submit" value="User Homepage">
+</form>
