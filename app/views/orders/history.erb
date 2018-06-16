@@ -1,10 +1,15 @@
 <h1>ORDER HISTORY</h1>
 Here are your Orders - click on the Order # to see details
-<% Order.all.each do |order|%>
-<% if order.user_id == current_user.id%>
+<%# test this: %>
+<%binding.pry%>
+<%@orders = Order.all.select {|order| order["user_id"] == current_user.id }%>
+<%binding.pry%>
+<% @orders.each do |order|%>
   <p><a href="/orders/<%= order.id %>">Order #: <%= order.id %></a> Store:  <%= @store.store_name %> <%= order.order_total %><br>
-  Ordered by: <%= @user.name %></p> 
-<%end%><br>
+  Ordered by: <%= @user.name %></p> <br>
 <%end%>
-
-
+<%binding.pry%>
+<%# GO TO USER HOMEPAGE %>
+<form action="/users/index" method="get">
+  <input type="submit" value="User Homepage">
+</form>
