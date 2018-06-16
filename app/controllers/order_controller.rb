@@ -18,7 +18,6 @@ class OrderController < ApplicationController
   get "/orders/new" do
     @order = Order.new(store_id: @user.store_id, user_id: @user.id)
     @order.save
-    # binding.pry
     @user.order_ids = @order.id
     @user.save
     erb :"/orders/new"
@@ -37,21 +36,20 @@ class OrderController < ApplicationController
   end
 
   get '/orders/:id' do
-    # binding.pry
     @order = Order.find(params[:id])
 
     erb :'/orders/show'
   end
 
   post "/orders/preview" do
-    # save order to orders table and to order_burrito
-    @order = Order.create(store_id: @store.id, user_id: @user.id)
-    @user.order_ids = @order.id
+    @order = Order.find_by_id(@user.order_ids)
+    # save order to orders table   
+    # @user.order_ids = @order.id
     params[:burritos].each do |item|
       if item[:quantity].to_i > 0
         # bring in current burrito element
         @burrito = Burrito.find_by_id(item[:id].to_i)
-        # create new order_burrito row
+        # save each ordered burrito to order_burrito
         OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
       end
     end
@@ -68,7 +66,7 @@ class OrderController < ApplicationController
         # bring in current burrito element
         @burrito = Burrito.find_by_id(item[:id].to_i)
         # create new order_burrito row
-        OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
+         OrderBurrito.update(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
       end
     end
     if OrderBurrito.last.order_id == @order.id
