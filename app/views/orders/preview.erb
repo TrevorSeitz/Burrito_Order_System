@@ -1,25 +1,19 @@
+<% @order.total_items = 0 %>
+<% @total = 0%>
 <h1>Order Preview</h1>
 <h3>Order #: <%= @user.order_ids %></h3>
 <% @order = Order.find_by_id(@user.order_ids) %>
-<% @order.total_items = 0 %>
-<% @total = 0%>
 <%OrderBurrito.all.where(order_id: Order.ids.last).each do |burrito|%>
-<%#OrderBurrito.last(Burrito.all.count).each do |burrito|%>
-  <%#if burrito.order_id == Order.ids.last%>
     <% @order.total_items += 1%>
-<%#S binding.pry %>
     <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
     <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
     <% item_total = burrito.quantity * @burrito.price %>
     Item Total: $<%= item_total %><br><br>
     <% @total += item_total %>
-    <%#end%>
 <%end%><br>
 Total: $<%= @total %><br><br><br><br>
 <% @order.order_total = @total %>
 <% @order.save %>
-<%# @order_burrito.order_total = @total %>
-<%# @order_burrito.save %>
 <form action="/orders/edit" method="get">
   <input type="submit" value="Edit Order"><br><br>
 </form><br>
