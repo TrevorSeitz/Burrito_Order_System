@@ -1,8 +1,8 @@
-<% @order.total_items = 0 %>
-<% @total = 0%>
 <h1>Order Preview</h1>
 <h3>Order #: <%= @user.order_ids %></h3>
 <% @order = Order.find_by_id(@user.order_ids) %>
+<% @order.total_items = 0 %>
+<% @total = 0%>
 <%OrderBurrito.all.where(order_id: Order.ids.last).each do |burrito|%>
     <% @order.total_items += 1%>
     <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
