@@ -45,6 +45,10 @@ class OrderController < ApplicationController
     erb :"orders/history"
   end
 
+  get '/errors/orders/blank_order' do
+    erb :'/errors/orders/blank_order'
+  end
+
   get '/orders/:id' do
     # show single order
     @order = Order.find(params[:id])
@@ -53,25 +57,32 @@ class OrderController < ApplicationController
   end
 
   post "/orders/preview" do
-    @order = Order.find_by_id(@user.order_ids)
-    # save order to orders table   
+    @order = Order.find_by_id(@user.order_ids) 
+    # ensure there are no empty orders
     @item_count = 0
+    # save order to order_burrito table  
     params[:burritos].each do |item|
       if item[:quantity].to_i > 0
+        # increase item count if quantity is > 0
         @item_count += 1
         # bring in current burrito element
         @burrito = Burrito.find_by_id(item[:id].to_i)
         # save each ordered burrito to order_burrito
         OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: item[:quantity].to_i, item_price: @burrito.price)
       end
+      # if quantity is not > 0 go to next item
     end
+    binding.pry
     if @item_count < 1
-      erb :'/errors/orders/blank_order'
+      # if item count 0 - go to error for blank order
+      redirect '/errors/orders/blank_order'
     end
+    # otherwise go to preview page
     redirect "/orders/preview"
   end
 
   patch "/orders/edit" do
+    # edit order
     item_count = 0
     @order = Order.find_by_id(@user.order_ids)
     # gather all items from order_burrito for this order
@@ -80,29 +91,38 @@ class OrderController < ApplicationController
     params[:burritos].each do |burrito|
       @burrito = Burrito.find_by_id(burrito[:id].to_i)
       if burrito[:quantity].to_i >0
+        # checking for 0 item order
         item_count += 1
       end
+      # check to see it item is already in the order
       @current_item = @order_items.where(burrito_id: burrito[:id].to_i)
       if @current_item == [] 
+        # if it is not and the quantity > 0 - add to order
         if burrito[:quantity].to_i >0
           OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: burrito[:quantity].to_i, item_price: @burrito.price)
         end
+        # if it is in the order, check to see if the order quantity hads changed
       elsif @current_item[0].quantity != burrito[:quantity].to_i
+        # if it has, adjust quantiy
         @current_item[0].quantity = burrito[:quantity].to_i
         @current_item[0].save
       end
     end
     if item_count < 1
-      erb :'/errors/orders/blank_order'
+      # if the order now contains 0 items go to error page
+      redirect '/errors/orders/blank_order'
     end
+    #  go to order confirmation/preview page
     redirect "/orders/preview"
   end
   
   post "/orders/complete" do
+    # after user confirms order, go back to user index page
     redirect "/users/index"
   end
   
   delete '/order/:id' do
+    # delete requested order and return to user index
     @order = Order.delete(params[:id])
     redirect "/users/index"
   end
