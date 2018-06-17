@@ -17,6 +17,10 @@ Total: $<%= @total %><br><br><br><br>
 <form action="/orders/edit" method="get">
   <input type="submit" value="Edit Order"><br><br>
 </form><br>
+<form action="/order/<%=@order.id%>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Cancel Order">
+</form>
 <form action="/orders/complete" method="post">
   <input type="submit" value="Submit Order">
 </form>
