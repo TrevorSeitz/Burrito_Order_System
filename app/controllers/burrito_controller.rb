@@ -1,15 +1,18 @@
 class BurritoController < ApplicationController
   before do
-    # Check if User exists
-    if !!@user = User.find_by(email: params[:email])
-      binding.pry
-      redirect "/users/new"
+    # Check if User exists & is logged in
+    if !current_user
+      redirect "/"
     end
-    # Check if User is Logged in
-    if !is_logged_in?
-      # if the user is not logged in - go to login page
-      redirect "/login"
-    end
+    # if !!@user = User.find_by(email: params[:email])
+    #   binding.pry
+    #   redirect "/users/new"
+    # end
+    # # Check if User is Logged in
+    # if !is_logged_in?
+    #   # if the user is not logged in - go to login page
+    #   redirect "/login"
+    # end
     # Create @user
     @user = User.find_by_id(session[:user_id])
     # Create @store
@@ -25,7 +28,6 @@ class BurritoController < ApplicationController
   end
 
   post "/burritos/new" do
-    # binding.pry
     @burrito = Burrito.new(params)  
     @burrito.save
     redirect "/burritos/new"
