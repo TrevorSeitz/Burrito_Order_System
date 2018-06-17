@@ -21,6 +21,7 @@
 
 <input type="submit" value="Submit Order">
 </form>
+<%# DELETE ORDER %>
 <form action="/order/<%=@order.id%>" method="post">
   <input type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Cancel Order"><br><br>

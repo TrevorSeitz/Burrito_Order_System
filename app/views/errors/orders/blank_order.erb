@@ -1,5 +1,8 @@
 <h2>You must order at least one burrito to continue!</h2>
-
+<% @order = Order.find_by_id(@user.order_ids) %>
+<h3>Order #: <%= @order.id %></h3>
+<form action="/orders/edit" method="POST">
+<input id="hidden" type="hidden" name="_method" value="PATCH">
 <% Burrito.all.each do |burrito| %>
   <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
  <label for="burritos[][id]"><%= burrito.id %>, <%= burrito.name %><br> 
