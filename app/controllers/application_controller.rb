@@ -14,6 +14,7 @@ class ApplicationController < Sinatra::Base
   set :views, Proc.new { File.join(root, "../views/") }
 
   get "/" do
+    # go to main splash/login page
     erb :'../index'
   end
 
