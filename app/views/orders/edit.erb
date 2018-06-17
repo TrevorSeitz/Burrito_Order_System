@@ -1,4 +1,6 @@
 <h1>EDIT ORDER</h1>
+<% @order = Order.find_by_id(@user.order_ids) %>
+<h3>Order #: <%= @order.id %></h3>
 <form action="/orders/edit" method="POST">
 <input id="hidden" type="hidden" name="_method" value="PATCH">
 <% Burrito.all.each do |burrito| %>
@@ -19,7 +21,7 @@
 
 <input type="submit" value="Submit Order">
 </form>
-<%# GO TO USER HOMEPAGE %>
-<form action="/users/index" method="get">
-  <input type="submit" value="User Homepage">
+<form action="/order/<%=@order.id%>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Cancel Order"><br><br>
 </form>
