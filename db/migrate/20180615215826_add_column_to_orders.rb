@@ -3,3 +3,4 @@ class AddColumnToOrders < ActiveRecord::Migration
     add_column :orders, :total_items, :integer 
   end
 end
+
