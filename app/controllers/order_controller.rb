@@ -1,14 +1,18 @@
 class OrderController < ApplicationController
   before do
-    # Check if User exists
-    if !!@user = User.find_by(email: params[:email])
-      redirect "/users/new"
+    # Check if User exists & is logged in
+    if !current_user
+      redirect "/"
     end
-    # Check if User is Logged in
-    if !is_logged_in?
-      # if the user is not logged in - go to login page
-      redirect "/login"
-    end
+    # # Check if User exists
+    # if !!@user = User.find_by(email: params[:email])
+    #   redirect "/users/new"
+    # end
+    # # Check if User is Logged in
+    # if !is_logged_in?
+    #   # if the user is not logged in - go to login page
+    #   redirect "/login"
+    # end
     # Create @user
     @user = User.find_by_id(session[:user_id])
     # Create @store
@@ -16,26 +20,33 @@ class OrderController < ApplicationController
   end
 
   get "/orders/new" do
+    # create new order and assign store and user to it
     @order = Order.new(store_id: @user.store_id, user_id: @user.id)
     @order.save
+    # assign new order id to user
     @user.order_ids = @order.id
     @user.save
+    # go to order form
     erb :"/orders/new"
   end
   
   get "/orders/preview" do
+    # preview order
     erb :"/orders/preview"
   end
 
   get "/orders/edit" do
+    # edit the order
     erb :"/orders/edit"
   end
 
   get '/orders/history' do
+    # show user's order history
     erb :"orders/history"
   end
 
   get '/orders/:id' do
+    # show single order
     @order = Order.find(params[:id])
 
     erb :'/orders/show'
@@ -86,9 +97,14 @@ class OrderController < ApplicationController
     end
     redirect "/orders/preview"
   end
-
+  
   post "/orders/complete" do
     redirect "/users/index"
   end
   
+  delete '/order/:id' do
+    @order = Order.delete(params[:id])
+    redirect "/users/index"
+  end
+
 end
