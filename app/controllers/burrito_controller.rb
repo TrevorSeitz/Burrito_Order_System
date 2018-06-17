@@ -5,15 +5,6 @@ class BurritoController < ApplicationController
     if !current_user
       redirect "/"
     end
-    # if !!@user = User.find_by(email: params[:email])
-    #   binding.pry
-    #   redirect "/users/new"
-    # end
-    # # Check if User is Logged in
-    # if !is_logged_in?
-    #   # if the user is not logged in - go to login page
-    #   redirect "/login"
-    # end
     # Create @user
     @user = User.find_by_id(session[:user_id])
     # Create @store
