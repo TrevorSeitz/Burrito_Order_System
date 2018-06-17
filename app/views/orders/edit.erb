@@ -1,0 +1,25 @@
+<h1>EDIT ORDER</h1>
+<form action="/orders/edit" method="POST">
+<input id="hidden" type="hidden" name="_method" value="PATCH">
+<% Burrito.all.each do |burrito| %>
+  <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
+ <label for="burritos[][id]"><%= burrito.id %>: <%= burrito.name %><br> 
+    <%= burrito.description %><br>
+    $<%= burrito.price %><br><br>
+  </label> 
+  <% @quantity = "" %>
+  <%OrderBurrito.last(Burrito.all.count).each do |burrito_quantity|%>
+    <%if burrito_quantity.order_id == Order.ids.last && burrito_quantity.burrito_id == burrito.id%>
+      <%@quantity = burrito_quantity.quantity%>
+    <%end%>
+  <%end%>
+  Quantity: <input type="number" name="burritos[][quantity]" id="quantity" min="0" value="<%= @quantity %>"><br><br><br>
+  
+<%end%>
+
+<input type="submit" value="Submit Order">
+</form>
+<%# GO TO USER HOMEPAGE %>
+<form action="/users/index" method="get">
+  <input type="submit" value="User Homepage">
+</form>

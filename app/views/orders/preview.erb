@@ -1,0 +1,22 @@
+<h1>Order Preview</h1>
+<h3>Order #: <%= @user.order_ids %></h3>
+<% @order = Order.find_by_id(@user.order_ids) %>
+<% @order.total_items = 0 %>
+<% @total = 0%>
+<%OrderBurrito.all.where(order_id: Order.ids.last).each do |burrito|%>
+    <% @order.total_items += 1%>
+    <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
+    <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
+    <% item_total = burrito.quantity * @burrito.price %>
+    Item Total: $<%= item_total %><br><br>
+    <% @total += item_total %>
+<%end%><br>
+Total: $<%= @total %><br><br><br><br>
+<% @order.order_total = @total %>
+<% @order.save %>
+<form action="/orders/edit" method="get">
+  <input type="submit" value="Edit Order"><br><br>
+</form><br>
+<form action="/orders/complete" method="post">
+  <input type="submit" value="Submit Order">
+</form>

@@ -1,0 +1,11 @@
+<h1>New Store Signup</h1>
+<% @user = User.find_by_id(session[:user_id])%>
+<h2>Welcome, <%= @user.name%></h2>
+
+<form action='/stores/new' method='POST'>
+ <label>Store Name: </label><input type="text" name="store_name" id:"store_name"><br>
+  <label>Store Address: </label><input type="text" name="address" id:"address"><br>
+  <label>Store Phone Number: </label><input type="text" name="phone_number" id:"phone_number"><br>
+ 
+  <input type="submit" value="Submit">
+</form>

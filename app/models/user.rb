@@ -1,5 +1,5 @@
 class User <ActiveRecord::Base
-  has_many :stores
+  belongs_to :stores
 
   has_secure_password
 
