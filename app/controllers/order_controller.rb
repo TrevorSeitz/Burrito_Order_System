@@ -63,7 +63,6 @@ class OrderController < ApplicationController
       end
       # if quantity is not > 0 go to next item
     end
-    binding.pry
     if @item_count < 1
       # if item count 0 - go to error for blank order
       redirect '/errors/orders/blank_order'

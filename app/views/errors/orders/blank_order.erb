@@ -1,8 +1,12 @@
-<h2>You must order at least one burrito to continue!</h2>
+<%# error for 0 burritos ordered %>
+<h2>You must order at least one burrito to continue or cancel the order!</h2>
+<%# finding the order %>
 <% @order = Order.find_by_id(@user.order_ids) %>
 <h3>Order #: <%= @order.id %></h3>
+<%# create edit form %>
 <form action="/orders/edit" method="POST">
 <input id="hidden" type="hidden" name="_method" value="PATCH">
+<%# list all available burritos %>
 <% Burrito.all.each do |burrito| %>
   <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
  <label for="burritos[][id]"><%= burrito.id %>, <%= burrito.name %><br> 
@@ -12,9 +16,10 @@
     Quantity: <input type="number" name="burritos[][quantity]" id="quantity" min="0"><br><br><br>
   
 <%end%>
+<%# SUBMIT ORDER %>
   <input type="submit" value="Submit">
 </form><br><br>
-<%# DELETE ORDER %>
+<%# DELETE/CANCEL ORDER %>
 <form action="/order/<%=@order.id%>" method="post">
   <input type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Cancel Order"><br><br>
