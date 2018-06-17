@@ -1,7 +1,7 @@
+<%# username or email already exists in the table %>
 <h1>Login Error!</h1>
 <h1>This username or email already exists</h1>
-if it is you, please log in
-
+<h3>if it is you, please log in</h3>
 <br><br><br>
 <form action="/login" method="POST">
  <label>Username:</label><input type="text" name="username">
@@ -12,6 +12,7 @@ if it is you, please log in
 
 <br><br><br>
 or try again
+<%# GO TO NEW USER FORM %>
 <form action="/users/new" method="get"><br>
  <input type="submit" value="Create New User">
 </form>
