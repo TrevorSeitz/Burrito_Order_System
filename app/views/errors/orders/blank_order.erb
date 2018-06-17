@@ -11,7 +11,8 @@
 <%end%>
   <input type="submit" value="Submit">
 </form><br><br>
-<%# GO TO USER HOMEPAGE %>
-<form action="/users/index" method="get">
-  <input type="submit" value="User Homepage">
+<%# DELETE ORDER %>
+<form action="/order/<%=@order.id%>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Cancel Order"><br><br>
 </form>
