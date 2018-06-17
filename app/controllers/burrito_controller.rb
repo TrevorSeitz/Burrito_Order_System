@@ -28,6 +28,7 @@ class BurritoController < ApplicationController
     else
       # got to burrito index
       redirect "/burritos/index"
+    end
   end
 
   get "/burritos/index" do
