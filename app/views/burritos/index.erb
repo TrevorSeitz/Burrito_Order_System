@@ -1,6 +1,6 @@
 <h1>Burrito List</h1>
 <%# Lists all burritos in the table %>
-<% Burrito.all.each do |burrito|%>
+<% @burritos.each do |burrito|%>
   <li>
   <%= burrito.name%><br>
   </li>
