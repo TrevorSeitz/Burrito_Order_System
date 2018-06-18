@@ -17,6 +17,10 @@ class OrderController < ApplicationController
   end
   
   get "/orders/preview" do
+    # collect burritos for order
+    @order = Order.find_by_id(@user.order_ids)
+    @order_items = OrderBurrito.all.find_all{|burrito| burrito["order_id"] == @user.order_ids }
+    
     # preview order
     erb :"/orders/preview"
   end

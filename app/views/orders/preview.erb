@@ -1,22 +1,22 @@
 <h1>Order Preview</h1>
-<%# get order id %>
-<% @order = Order.find_by_id(@user.order_ids) %>
-<h3>Order #: <%= @order.id %></h3>
+<h3> Order #: <%= @order.id %></h3>
 <%# set order items to 0 %>
 <% @order.total_items = 0 %>
 <%# set order total to 0 %>
 <% @total = 0%>
 <%# list all burritos ordered %>
-<% OrderBurrito.all.select{|order| order["order_id"] == @order.id }.each do |burrito| %>
+<% @order_items.each do |burrito|%>  
   <%# increase total items by 1 %>
   <% @order.total_items += 1%>
-  <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
-  <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: <%= '%.2f' % @burrito.price %><br>
+  <%# get burrito info %>
+  <% @burrito = Burrito.find_by_id(burrito.burrito_id) %>   
+  <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= '%.2f' % burrito.item_price %><br>
   <%# calculate item total %>
   <% item_total = burrito.quantity * @burrito.price %>
   Sub Total: $<%= '%.2f' % item_total %><br><br>
   <%# add item total to order total %>
   <% @total += item_total %>
+<%#binding.pry%>
 <%end%><br>
 Total: $<%= '%.2f' % @total %><br><br><br><br>
 <%# add order total to table %>
