@@ -47,7 +47,7 @@ class OrderController < ApplicationController
     erb :'/orders/show'
   end
 
-  post "/orders/preview" do
+  post "/orders/new" do
     # create new order and assign store and user to it
     @order = Order.new(store_id: @user.store_id, user_id: @user.id)
     @order.save

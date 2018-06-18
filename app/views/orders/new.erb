@@ -1,7 +1,7 @@
 <h1>NEW ORDER</h1>
-<form action="/orders/preview" method="POST">
+<form action="/orders/new" method="POST">
 <% Burrito.all.each do |burrito| %>
-  <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.price %>">
+  <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
   <label for="burritos[][id]"><%= burrito.id %>: <%= burrito.name %><br> 
     <%= burrito.description %><br>
     <%#binding.pry%>
