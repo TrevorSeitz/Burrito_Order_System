@@ -7,16 +7,16 @@
 <%# set order total to 0 %>
 <% @total = 0%>
 <%# list all burritos ordered %>
-<%OrderBurrito.all.where(order_id: Order.ids.last).each do |burrito|%>
-    <%# increase total items by 1 %>
-    <% @order.total_items += 1%>
-    <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
-    <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
-    <%# calculate item total %>
-    <% item_total = burrito.quantity * @burrito.price %>
-    Item Total: $<%= item_total %><br><br>
-    <%# add item total to order total %>
-    <% @total += item_total %>
+<% OrderBurrito.all.select{|order| order["order_id"] == @order.id }.each do |burrito| %>
+  <%# increase total items by 1 %>
+  <% @order.total_items += 1%>
+  <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
+  <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
+  <%# calculate item total %>
+  <% item_total = burrito.quantity * @burrito.price %>
+  Sub Total: $<%= item_total %><br><br>
+  <%# add item total to order total %>
+  <% @total += item_total %>
 <%end%><br>
 Total: $<%= @total %><br><br><br><br>
 <%# add order total to table %>
