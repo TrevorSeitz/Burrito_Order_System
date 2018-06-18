@@ -11,12 +11,6 @@ class OrderController < ApplicationController
   end
 
   get "/orders/new" do
-    # create new order and assign store and user to it
-    @order = Order.new(store_id: @user.store_id, user_id: @user.id)
-    @order.save
-    # assign new order id to user
-    @user.order_ids = @order.id
-    @user.save
     # go to order form
     erb :"/orders/new"
   end
@@ -48,7 +42,13 @@ class OrderController < ApplicationController
   end
 
   post "/orders/preview" do
-    @order = Order.find_by_id(@user.order_ids) 
+    # @order = Order.find_by_id(@user.order_ids) 
+    # create new order and assign store and user to it
+    @order = Order.new(store_id: @user.store_id, user_id: @user.id)
+    @order.save
+    # assign new order id to user
+    @user.order_ids = @order.id
+    @user.save
     # ensure there are no empty orders
     @item_count = 0
     # save order to order_burrito table  
