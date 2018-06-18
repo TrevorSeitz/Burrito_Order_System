@@ -18,7 +18,7 @@ class BurritoController < ApplicationController
     erb :"/burritos/new"
     else
       # got to burrito index
-      redirect "/burritos/index"
+      redirect "/logout"
     end
   end
 
