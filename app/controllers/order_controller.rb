@@ -26,8 +26,10 @@ class OrderController < ApplicationController
   end
 
   get "/orders/edit" do
-    # binding.pry
     @order = Order.find_by_id(@user.order_ids)
+    @burrito = Burrito.all
+    @order_items = OrderBurrito.all.find_all{|burrito| burrito["order_id"] == @user.order_ids }
+    
     # edit the order
     erb :"/orders/edit"
   end

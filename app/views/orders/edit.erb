@@ -3,26 +3,26 @@
 <h3>Order #: <%= @order.id %></h3>
 <form action="/orders/edit" method="POST">
 <input id="hidden" type="hidden" name="_method" value="PATCH">
-<% Burrito.all.each do |burrito| %>
-  <%@quantity = 0%>
+<% @burrito.each do |burrito| %>
+  <% @quantity = 0 %>
   <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
   <label for="burritos[][id]"><%= burrito.id %>: <%= burrito.name %><br> 
     <%= burrito.description %><br>
     $<%= '%.2f' % burrito.price %><br><br>
   </label> 
-  <% OrderBurrito.all.select{|order| order["order_id"] == @order.id }.each do |order| %>
-    <%if order.burrito_id == burrito.id%>
-      <%@quantity =order.quantity%>
-    <%end%>
-  <%end%>
+  <% @order_items.select{|order| order["order_id"] == @order.id }.each do |order| %>
+    <% if order.burrito_id == burrito.id %>
+      <% @quantity =order.quantity %>
+    <% end %>
+  <% end %>
   Quantity: <input type="number" name="burritos[][quantity]" id="quantity" min="0" value="<%= @quantity %>"><br><br><br>
   
 <%end%>
 
 <input type="submit" value="Submit Order">
-</form>
+</form><br>
 <%# DELETE ORDER %>
-<form action="/order/<%=@order.id%>" method="post">
+<form action="/order/<%= @order.id %>" method="post">
   <input type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Cancel Order"><br><br>
 </form>
