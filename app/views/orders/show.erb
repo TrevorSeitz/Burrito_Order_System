@@ -1,8 +1,10 @@
 Order Information 
+<%# List order info %>
 <p>Order #: <%= params[:id] %></a> Store: <%= @store.store_name %><br> 
 Order Total: $<%= @order.order_total %><br>
 Ordered by: <%= @user.name %></p> 
 
+<%# list order items %>
 <% @order_items = OrderBurrito.all.where(order_id:  params[:id].to_i)%>
 <%@order_items.each do |burrito| %>
   <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
