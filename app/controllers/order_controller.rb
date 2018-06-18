@@ -12,6 +12,7 @@ class OrderController < ApplicationController
   end
 
   get "/orders/new" do
+    @burrito = Burrito.all
     # go to order form
     erb :"/orders/new"
   end
