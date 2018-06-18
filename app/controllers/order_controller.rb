@@ -1,4 +1,5 @@
 class OrderController < ApplicationController
+  
   before do
     # Check if User exists & is logged in
     if !current_user
@@ -108,7 +109,10 @@ class OrderController < ApplicationController
   end
   
   post "/orders/complete" do
-    # after user confirms order, go back to user index page
+    # after user confirms order, remove order number from @user
+    @user.order_ids = nil
+    @user.save
+    # go back to user index page
     redirect "/users/index"
   end
   
