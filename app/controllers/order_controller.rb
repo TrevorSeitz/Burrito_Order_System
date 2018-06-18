@@ -49,6 +49,7 @@ class OrderController < ApplicationController
   get '/orders/:id' do
     # show single order
     @order = Order.find(params[:id])
+    @order_items = OrderBurrito.all.where(order_id:  params[:id].to_i)
 
     erb :'/orders/show'
   end
