@@ -21,6 +21,8 @@ class OrderController < ApplicationController
   end
 
   get "/orders/edit" do
+    # binding.pry
+    @order = Order.find_by_id(@user.order_ids)
     # edit the order
     erb :"/orders/edit"
   end
@@ -42,7 +44,6 @@ class OrderController < ApplicationController
   end
 
   post "/orders/preview" do
-    # @order = Order.find_by_id(@user.order_ids) 
     # create new order and assign store and user to it
     @order = Order.new(store_id: @user.store_id, user_id: @user.id)
     @order.save
