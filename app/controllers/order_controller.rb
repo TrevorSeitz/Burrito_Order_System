@@ -29,8 +29,11 @@ class OrderController < ApplicationController
   end
 
   get '/orders/history' do
+    # collect the user's orders
+    @orders = Order.all.find_all{|order| order["user_id"] == current_user.id }
+
     # show user's order history
-    erb :"orders/history"
+    erb :"/orders/history"
   end
 
   get '/errors/orders/blank_order' do
