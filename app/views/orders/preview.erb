@@ -11,14 +11,14 @@
   <%# increase total items by 1 %>
   <% @order.total_items += 1%>
   <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
-  <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
+  <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: <%= '%.2f' % @burrito.price %><br>
   <%# calculate item total %>
   <% item_total = burrito.quantity * @burrito.price %>
-  Sub Total: $<%= item_total %><br><br>
+  Sub Total: $<%= '%.2f' % item_total %><br><br>
   <%# add item total to order total %>
   <% @total += item_total %>
 <%end%><br>
-Total: $<%= @total %><br><br><br><br>
+Total: $<%= '%.2f' % @total %><br><br><br><br>
 <%# add order total to table %>
 <% @order.order_total = @total %>
 <% @order.save %>
