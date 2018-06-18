@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180615215826) do
+ActiveRecord::Schema.define(version: 20180618161319) do
 
   create_table "burritos", force: :cascade do |t|
     t.string  "name"
     t.string  "description"
-    t.decimal "price"
+    t.decimal "price",       precision: 10, scale: 2
     t.integer "quantity"
     t.boolean "vegan"
     t.boolean "gluten_free"
