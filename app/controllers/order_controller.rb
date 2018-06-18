@@ -44,6 +44,7 @@ class OrderController < ApplicationController
   end
 
   get '/errors/orders/blank_order' do
+    @burritos = Burrito.all
     erb :'/errors/orders/blank_order'
   end
 

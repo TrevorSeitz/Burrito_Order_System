@@ -7,7 +7,7 @@
 <form action="/orders/edit" method="POST">
 <input id="hidden" type="hidden" name="_method" value="PATCH">
 <%# list all available burritos %>
-<% Burrito.all.each do |burrito| %>
+<% @burritos.each do |burrito| %>
   <input id="<%= burrito.id %>" type="hidden" name="burritos[][id]" value="<%= burrito.id %>">
  <label for="burritos[][id]"><%= burrito.id %>, <%= burrito.name %><br> 
     <%= burrito.description %><br>
