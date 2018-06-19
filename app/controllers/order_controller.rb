@@ -19,7 +19,7 @@ class OrderController < ApplicationController
   
   get "/orders/preview" do
     # collect burritos for order
-    @order = Order.find_by_id(@user.order_ids)
+    @order = Order.find_by_id(current_user.order_ids)
     @order_items = @order.burritos
 
     # preview order
@@ -27,7 +27,7 @@ class OrderController < ApplicationController
   end
 
   get "/orders/edit" do
-    @order = Order.find_by_id(@user.order_ids)
+    @order = Order.find_by_id(current.order_ids)
     @burrito = Burrito.all
     @order_items = @order.burritos
 
@@ -60,7 +60,7 @@ class OrderController < ApplicationController
     # set item count to 0 to ensure there are no empty orders
     @item_count = 0
     # create new order and assign store and user to it
-    @order = Order.new(store_id: @user.store_id, user_id: @user.id)
+    @order = Order.new(store_id: current_user.store_id, user_id: current_user.id)
     @order.save
     # assign new order id to user
     @user.order_ids = @order.id
@@ -75,7 +75,7 @@ class OrderController < ApplicationController
         @burrito.quantity = burrito[:quantity].to_i
         @burrito.save
         # save each ordered burrito to order_burrito
-        OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: @burrito.quantity, item_price: @burrito.price)
+        OrderBurrito.create(order_id: @order.id, user_id: current_user.id, burrito_id: @burrito.id, quantity: @burrito.quantity, item_price: @burrito.price)
       end
       # if quantity is not > 0 go to next burrito
     end
@@ -90,7 +90,7 @@ class OrderController < ApplicationController
   patch "/orders/edit" do
     # set item count to 0 to ensure there are no empty orders
     item_count = 0
-        @order = Order.find_by_id(@user.order_ids)
+        @order = Order.find_by_id(current_user.order_ids)
     # delete old OrderBurrito items for this order_id
     OrderBurrito.where(order_id: @order.id).destroy_all  
     # sort through the edited order to update new quantities
@@ -102,7 +102,7 @@ class OrderController < ApplicationController
         # adding to item_count to check for 0 item order
         item_count += 1
         # create new OrderBurrito item for order item
-        OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: @burrito.quantity, item_price: @burrito.price)
+        OrderBurrito.create(order_id: @order.id, user_id: current_user.id, burrito_id: @burrito.id, quantity: @burrito.quantity, item_price: @burrito.price)
       end
     end
     # check for 0 order
