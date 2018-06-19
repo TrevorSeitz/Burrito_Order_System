@@ -1,18 +1,21 @@
 <h1>Order Preview</h1>
 <h3> Order #: <%= @order.id %></h3>
+
 <%# set order items to 0 to count items to avoid a 0 item order%>
 <% @order.total_items = 0 %>
+
 <%# set order total to 0 %>
 <% @total = 0%>
+
 <%# list all burritos ordered %>
 <% @order_items.each do |burrito|%>  
   <%# increase total items by 1 %>
   <% @order.total_items += 1%>
+
   <%# get burrito info %>
-  <% @burrito = Burrito.find_by_id(burrito.burrito_id) %>  
-  <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= '%.2f' % burrito.item_price %><br>
+  <%= burrito.id %>: <%= burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= '%.2f' % burrito.price %><br>
   <%# calculate subtotal %>
-  <% item_total = burrito.quantity * @burrito.price %>
+  <% item_total = burrito.quantity * burrito.price %>
   Sub Total: $<%= '%.2f' % item_total %><br><br>
   <%# add subtotal to order total %>
   <% @total += item_total %>
