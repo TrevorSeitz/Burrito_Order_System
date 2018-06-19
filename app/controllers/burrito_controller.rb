@@ -24,10 +24,39 @@ class BurritoController < ApplicationController
     erb :"/burritos/index"
   end
 
+  get "/burritos/:id" do
+    # show single order
+    @burrito = Burrito.find(params[:id].to_i)
+
+    erb :'/burritos/show'
+  end
+
+  get "/burritos/:id/edit" do
+    @burrito = Burrito.find_by_id(params[:id].to_i)
+    
+    # edit the burrito
+    erb :"/burritos/edit"
+  end
+
   post "/burritos/new" do
     # receive new burrito form and save burrito to burrito table
     @burrito = Burrito.new(params)  
     @burrito.save
     redirect "/burritos/new"
+  end
+
+  patch "/burritos/edit" do
+    @burrito = Burrito.find_by_id(params[:id].to_i)
+    @burrito.update({name: params[:name], description: params[:description], price: params[:price]})
+    @burrito.save
+
+    redirect "/burritos/index"    
+  end
+
+  delete '/burritos/:id' do
+    # delete requested order and return to user index
+    @burrito = Burrito.delete(params[:id])
+
+    redirect "/burritos/index"
   end
 end

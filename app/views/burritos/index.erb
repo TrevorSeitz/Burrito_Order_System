@@ -2,16 +2,12 @@
 <%# Lists all burritos in the table %>
 <% @burritos.each do |burrito|%>
   <li>
-  <%= burrito.name%><br>
+  <p><a href="/burritos/<%= burrito.id %>"><%= burrito.id %>. <%= burrito.name%></a><br>
   </li>
 <%end%>
 <form action="/burritos/new" method="get">
   <input type="submit" value="Add A new Burrito">
 </form><br>
-<%# for later addition of delete button %>
-  <%# <form action="/burritos/delete" method="post">
-    <input type="submit" value="Delete checked Burrito(s)"><br><br>
-  </form> %>
 <%# GO TO USER HOMEPAGE %>
 <form action="/users/index" method="get">
   <input type="submit" value="User Homepage">

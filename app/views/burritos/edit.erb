@@ -1,0 +1,21 @@
+<form action="/burritos/edit" method="POST">
+<input id="hidden" type="hidden" name="_method" value="PATCH">
+  <label></label><input type="hidden" name="id" value="<%=@burrito.id%>"><br><br>
+  <label>Burrito Name:</label><input type="text" name="name" value="<%=@burrito.name%>"><br><br>
+  <label>Description:</label><input type="text" name="description" size="50"value="<%=@burrito.description%>"><br><br>
+  <label>Price: $</label><input type="decimal" name="price" value="<%= '%.2f' % @burrito.price%>"><br><br><br>
+ 
+  <input type="submit" value="Complete Edit"><br><br>
+</form>
+<%# DELETE ORDER %>
+<form action="/burritos/<%= @burrito.id %>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete Burrito"><br><br>
+</form>
+<%# RETURN TO BURRITO INDEX %>
+<form action="/burritos/index" method="get">
+  <input type="submit" value="List Burritos">
+</form>
+
+
+
