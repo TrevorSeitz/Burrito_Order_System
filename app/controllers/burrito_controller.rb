@@ -5,15 +5,11 @@ class BurritoController < ApplicationController
     if !current_user
       redirect "/"
     end
-    # Create @user
-    @user = User.find_by_id(session[:user_id])
-    # Create @store
-    @store = Store.find_by_id(@user.store_id)
   end
   
   get "/burritos/new" do 
     # should have proper admin check here
-    if @user.username == "sam_the_owner"
+    if current_user.username == "sam_the_owner"
     # go to new burrito form
     erb :"/burritos/new"
     else
