@@ -1,5 +1,6 @@
 <h1>ORDER HISTORY</h1>
 Here are your Orders - click on the Order # to see details
+<br><br><br>
 <% @orders.each do |order| %>
   <p><a href="/orders/<%= order.id %>">Order #: <%= order.id %></a> Store:  <%= @store.store_name %><br> 
   Order Total: $<%= '%.2f' % order.order_total %><br>
