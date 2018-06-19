@@ -1,13 +1,14 @@
 Order Information 
+<%# List order info %>
 <p>Order #: <%= params[:id] %></a> Store: <%= @store.store_name %><br> 
-Order Total: $<%= @order.order_total %><br>
+Order Total: $<%=  '%.2f' % @order.order_total %><br>
 Ordered by: <%= @user.name %></p> 
 
-<% @order_items = OrderBurrito.all.where(order_id:  params[:id].to_i)%>
+<%# list order items %>
 <%@order_items.each do |burrito| %>
   <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
-  #<%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
-  Item Total: $<%= burrito.quantity * @burrito.price %><br><br>
+  #<%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%=  '%.2f' % @burrito.price %><br>
+  Item Total: $<%=  '%.2f' % (burrito.quantity * @burrito.price) %><br><br>
 <% end %>
 <%# BACK TO ORDER HISTORY %>
 <form action="/orders/history" method="get">

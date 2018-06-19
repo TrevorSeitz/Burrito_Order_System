@@ -1,22 +1,39 @@
 <h1>Order Preview</h1>
-<h3>Order #: <%= @user.order_ids %></h3>
-<% @order = Order.find_by_id(@user.order_ids) %>
+<h3> Order #: <%= @order.id %></h3>
+
+<%# set order items to 0 to count items to avoid a 0 item order%>
 <% @order.total_items = 0 %>
+
+<%# set order total to 0 %>
 <% @total = 0%>
-<%OrderBurrito.all.where(order_id: Order.ids.last).each do |burrito|%>
-    <% @order.total_items += 1%>
-    <% @burrito = Burrito.find_by_id(burrito[:burrito_id]) %>   
-    <%= @burrito.id %>: <%= @burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= @burrito.price %><br>
-    <% item_total = burrito.quantity * @burrito.price %>
-    Item Total: $<%= item_total %><br><br>
-    <% @total += item_total %>
+
+<%# list all burritos ordered %>
+<% @order_items.each do |burrito|%>  
+  <%# increase total items by 1 %>
+  <% @order.total_items += 1%>
+
+  <%# get burrito info %>
+  <%= burrito.id %>: <%= burrito.name %>, Quantity: <%= burrito.quantity %>, Price: $<%= '%.2f' % burrito.price %><br>
+  <%# calculate subtotal %>
+  <% item_total = burrito.quantity * burrito.price %>
+  Sub Total: $<%= '%.2f' % item_total %><br><br>
+  <%# add subtotal to order total %>
+  <% @total += item_total %>
 <%end%><br>
-Total: $<%= @total %><br><br><br><br>
+Total: $<%= '%.2f' % @total %><br><br><br><br>
+<%# add order total to table %>
 <% @order.order_total = @total %>
 <% @order.save %>
+<%# GO TO EDIT ORDER %>
 <form action="/orders/edit" method="get">
   <input type="submit" value="Edit Order"><br><br>
-</form><br>
+</form>
+<%# DELETE/CANCEL ORDER %>
+<form action="/order/<%=@order.id%>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Cancel Order"><br><br>
+</form>
+<%# SUBMIT ORDER %>
 <form action="/orders/complete" method="post">
   <input type="submit" value="Submit Order">
 </form>

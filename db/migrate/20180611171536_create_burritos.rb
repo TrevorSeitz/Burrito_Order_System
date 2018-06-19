@@ -11,3 +11,4 @@ class CreateBurritos < ActiveRecord::Migration
     end
   end
 end
+

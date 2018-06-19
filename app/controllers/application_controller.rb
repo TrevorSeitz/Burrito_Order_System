@@ -8,12 +8,13 @@ class ApplicationController < Sinatra::Base
     enable :sessions
     set :session_secret, "secret_burrito_ingredient"
   end
-
+  
   # register Sinatra::ActiveRecordExtenstion
 
   set :views, Proc.new { File.join(root, "../views/") }
 
   get "/" do
+    # go to main splash/login page
     erb :'../index'
   end
 
@@ -24,6 +25,10 @@ class ApplicationController < Sinatra::Base
 
     def current_user
       User.find(session[:user_id])
+    end
+
+    def number_to_currency(num)
+      "$#{num.to_s.gsub(/\d(?=(...)+$)/, '\0,')}"
     end
   end
 

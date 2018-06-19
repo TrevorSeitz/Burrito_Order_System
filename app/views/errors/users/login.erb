@@ -1,1 +1,17 @@
-<h1>Login Error</h1>
+<%#  usename or password incorrect %>
+<h1>Login Error!</h1>
+<h3>username or password incorrect!</h3>
+<p>Please try again</p>
+<br><br><br>
+<form action="/login" method="POST">
+  <label>Username:</label><input type="text" name="username">
+  <label>Password:</label><input type="text" name="password">
+
+  <input type="submit" value="Log In" id=login>
+</form>
+<br><br><br>
+or create a new user
+<%# GO TO NEW USER FORM %>
+<form action="/users/new" method="get"><br>
+ <input type="submit" value="Create New User">
+</form>
