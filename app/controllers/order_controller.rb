@@ -27,7 +27,7 @@ class OrderController < ApplicationController
   end
 
   get "/orders/edit" do
-    @order = Order.find_by_id(current.order_ids)
+    @order = Order.find_by_id(current_user.order_ids)
     @burrito = Burrito.all
     @order_items = @order.burritos
 
