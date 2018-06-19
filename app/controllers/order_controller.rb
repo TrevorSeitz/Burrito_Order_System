@@ -57,28 +57,27 @@ class OrderController < ApplicationController
   end
 
   post "/orders/new" do
+    # set item count to 0 to ensure there are no empty orders
+    @item_count = 0
     # create new order and assign store and user to it
     @order = Order.new(store_id: @user.store_id, user_id: @user.id)
     @order.save
     # assign new order id to user
     @user.order_ids = @order.id
     @user.save
-    # ensure there are no empty orders
-    @item_count = 0
     # save order to order_burrito table  
-    params[:burritos].each do |item|
-      binding.pry
-      if item[:quantity].to_i > 0
-        # increase item count if quantity is > 0
+    params[:burritos].each do |burrito|
+      if burrito[:quantity].to_i > 0
+        # increase item_count if quantity is > 0
         @item_count += 1
         # bring in current burrito element
-        @burrito = Burrito.find_by_id(item[:id].to_i)
-        @burrito.quantity = item[:quantity].to_i
+        @burrito = Burrito.find_by_id(burrito[:id].to_i)
+        @burrito.quantity = burrito[:quantity].to_i
         @burrito.save
         # save each ordered burrito to order_burrito
         OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: @burrito.quantity, item_price: @burrito.price)
       end
-      # if quantity is not > 0 go to next item
+      # if quantity is not > 0 go to next burrito
     end
     if @item_count < 1
       # if item count 0 - go to error for blank order
@@ -89,39 +88,29 @@ class OrderController < ApplicationController
   end
 
   patch "/orders/edit" do
-    # edit order
+    # set item count to 0 to ensure there are no empty orders
     item_count = 0
-    binding.pry
-    @order = Order.find_by_id(@user.order_ids)
-    # gather all items from order_burrito for this order
-    @order_items = @order.burritos
-    #  sort through the edited order 
+        @order = Order.find_by_id(@user.order_ids)
+    # delete old OrderBurrito items for this order_id
+    OrderBurrito.where(order_id: @order.id).destroy_all  
+    # sort through the edited order to update new quantities
     params[:burritos].each do |burrito|
       @burrito = Burrito.find_by_id(burrito[:id].to_i)
+      @burrito.quantity = burrito[:quantity].to_i
+      @burrito.save
       if burrito[:quantity].to_i >0
-        # checking for 0 item order
+        # adding to item_count to check for 0 item order
         item_count += 1
+        # create new OrderBurrito item for order item
+        OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: @burrito.quantity, item_price: @burrito.price)
       end
-      # check to see it item is already in the order
-      binding.pry
-      #@current_item = @order_items.where(burrito_id: burrito[:id].to_i)
-      # if @order_item == [] 
-      #   # if it is not and the quantity > 0 - add to order
-      #   if burrito[:quantity].to_i >0
-      #     OrderBurrito.create(order_id: @order.id, user_id: @user.id, burrito_id: @burrito.id, quantity: burrito[:quantity].to_i, item_price: @burrito.price)
-      #   end
-      #   # if it is in the order, check to see if the order quantity hads changed
-      # elsif @current_item[0].quantity != burrito[:quantity].to_i
-      #   # if it has, adjust quantiy
-      #   @current_item[0].quantity = burrito[:quantity].to_i
-      #   @current_item[0].save
-      # end
     end
+    # check for 0 order
     if item_count < 1
       # if the order now contains 0 items go to error page
       redirect '/errors/orders/blank_order'
     end
-    #  go to order confirmation/preview page
+    # if order is ok - go to order confirmation/preview page
     redirect "/orders/preview"
   end
   
@@ -140,6 +129,10 @@ class OrderController < ApplicationController
   delete '/order/:id' do
     # delete requested order and return to user index
     @order = Order.delete(params[:id])
+    Burrito.all.each do |burrito|
+      burrito.quantity = 0
+      burrito.save
+    end
     redirect "/users/index"
   end
 
