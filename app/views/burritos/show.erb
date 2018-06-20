@@ -1,0 +1,13 @@
+<h1><%= @burrito.id %> <%= @burrito.name %></h1>
+<h2>Price: <%= '%.2f' % @burrito.price %></h2>
+<p>Description: <%= @burrito.description %></p>
+
+<%# EDIT BURRITO %>
+<form action="/burritos/<%= @burrito.id %>/edit" method="get">
+  <input type="submit" value="Edit Burrito">
+</form><br>
+
+<%# GO TO BURRITO LIST %>
+<form action="/burritos/index" method="get">
+  <input type="submit" value="Back to List">
+</form>
