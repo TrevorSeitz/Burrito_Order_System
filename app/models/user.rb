@@ -1,5 +1,7 @@
 class User <ActiveRecord::Base
-  belongs_to :stores
+  belongs_to :store
+  has_many :order_burritos
+  has_many :orders, through: :order_burritos
 
   has_secure_password
 

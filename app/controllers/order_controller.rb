@@ -49,12 +49,14 @@ class OrderController < ApplicationController
   end
 
   get '/orders/:id' do
-    # show single order
-    @order = Order.find(params[:id])
-    @order_items = OrderBurrito.all.where(order_id:  params[:id].to_i)
-
-    erb :'/orders/show'
-  end
+    @order = Order.find_by_id(params[:id])
+    if !@order || current_user.id != @order.user_id
+      redirect "/orders/history"
+    else
+      # show single order
+      erb :'/orders/show'
+    end
+      end
 
   post "/orders/new" do
     # set item count to 0 to ensure there are no empty orders
