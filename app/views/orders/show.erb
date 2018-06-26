@@ -3,12 +3,13 @@ Order Information
 <p>Order #: <%= params[:id] %></a> Store: <%= @store.store_name %><br> 
 Order Total: $<%=  '%.2f' % @order.order_total %><br>
 Ordered by: <%= @user.name %></p> 
+<%binding.pry%>
 
 <%# list order items %>
-<%#binding.pry%>
 <%# I had to add in an item count due to how I am saving the quantity%>
-<% item_count = 0%>
+<% item_count = 1%>
 <%@order.burritos.each do |burrito| %>
+<%binding.pry%>
   <%= burrito.id %>: <%= burrito.name %>, Quantity: <%= @order.order_burritos[item_count].quantity %>, Price: $<%=  '%.2f' % burrito.price %><br>
   Item Total: $<%=  '%.2f' % (@order.order_burritos[item_count].quantity  * burrito.price) %><br><br>
   <%item_count += 1%>

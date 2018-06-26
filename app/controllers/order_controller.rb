@@ -38,7 +38,7 @@ class OrderController < ApplicationController
   get '/orders/history' do
     # collect the user's orders
     @orders = Order.all.find_all{|order| order["user_id"] == current_user.id }
-
+    # @orders = current_user.orders
     # show user's order history
     erb :"/orders/history"
   end
@@ -87,6 +87,7 @@ class OrderController < ApplicationController
     end
     # otherwise go to preview page
     redirect "/orders/preview"
+
   end
 
   patch "/orders/edit" do
@@ -117,13 +118,6 @@ class OrderController < ApplicationController
   end
   
   post "/orders/complete" do
-    # after user confirms order, remove order number from @user
-    @user.order_ids = nil
-    @user.save
-    Burrito.all.each do |burrito|
-      burrito.quantity = nil
-      burrito.save
-    end
     # go back to user index page
     redirect "/users/index"
   end
